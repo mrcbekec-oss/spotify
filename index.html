@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101110" />
+    <title>Ritim — Müzik kütüphanen</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Ritim ana sayfa">
+          <span class="brand-mark" aria-hidden="true">♫</span>
+          <span>ritim</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Ana menü">
+          <a class="nav-link active" href="#library">
+            <span aria-hidden="true">⌂</span> Kütüphanem
+          </a>
+          <a class="nav-link" href="#library" id="search-link">
+            <span aria-hidden="true">⌕</span> Şarkı ara
+          </a>
+        </nav>
+
+        <div class="library-heading">
+          <h2>Ortak kütüphane</h2>
+          <button class="icon-button" id="add-button" type="button" aria-label="Yönetici girişi" title="Yönetici girişi">＋</button>
+          <input id="file-input" type="file" accept="audio/*" multiple hidden />
+        </div>
+        <p class="sidebar-note">Buradaki şarkılar herkese açıktır. Yalnızca yönetici yükleyebilir.</p>
+        <div class="sidebar-footer">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="library-status">Ortak müzik kütüphanesi</span>
+        </div>
+      </aside>
+
+      <main class="main-content" id="library">
+        <header class="topbar">
+          <div class="history-buttons" aria-label="Sayfa gezinme">
+            <button class="round-button" type="button" aria-label="Geri" disabled>‹</button>
+            <button class="round-button" type="button" aria-label="İleri" disabled>›</button>
+          </div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="Şarkılarında ara" autocomplete="off" />
+          </label>
+          <button class="profile-button admin-login-button" id="admin-login-button" type="button" aria-label="Yönetici girişi" title="Yönetici girişi">♙</button>
+          <button class="profile-button admin-login-button" id="admin-logout-button" type="button" aria-label="Yönetici çıkışı" title="Yönetici çıkışı" hidden>×</button>
+        </header>
+
+        <section class="welcome-panel">
+          <div class="welcome-copy">
+            <p class="eyebrow">ORTAK MÜZİK KÜTÜPHANESİ</p>
+            <h1>Müzik herkesi bir araya getirir.</h1>
+            <p class="welcome-description">Kütüphanedeki şarkıları herkes dinleyebilir. Yeni müzikleri yalnızca yönetici ekleyebilir.</p>
+            <button class="primary-button" id="welcome-add-button" type="button">＋ Yönetici girişi</button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-record"><span></span></div>
+            <div class="hero-sparkle sparkle-one">✳</div>
+            <div class="hero-sparkle sparkle-two">✦</div>
+          </div>
+        </section>
+
+        <section class="tracks-section" aria-labelledby="tracks-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">KOLEKSİYONUN</p>
+              <h2 id="tracks-heading">Şarkıların</h2>
+            </div>
+            <span class="track-count" id="track-count">0 şarkı</span>
+          </div>
+
+          <div class="track-table" role="table" aria-label="Müzik kütüphanesi">
+            <div class="track-header" role="row">
+              <span role="columnheader">#</span>
+              <span role="columnheader">Başlık</span>
+              <span role="columnheader" class="album-column">Dosya türü</span>
+              <span role="columnheader" class="duration-column">Süre</span>
+              <span role="columnheader" aria-label="İşlemler"></span>
+            </div>
+            <div id="track-list" class="track-list"></div>
+          </div>
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon" aria-hidden="true">♫</div>
+            <h3>Kütüphanen henüz boş</h3>
+            <p>Yönetici, dağıtım hakkına sahip olduğu MP3, WAV veya diğer ses dosyalarını ekleyebilir.</p>
+            <button class="secondary-button" id="empty-add-button" type="button">Yönetici girişi</button>
+          </div>
+          <p class="no-results" id="no-results" hidden>Bu aramayla eşleşen şarkı bulunamadı.</p>
+        </section>
+      </main>
+    </div>
+
+    <footer class="player-bar" aria-label="Müzik oynatıcı">
+      <div class="now-playing">
+        <div class="mini-cover" id="player-cover" aria-hidden="true">♫</div>
+        <div class="now-playing-text">
+          <p id="player-title">Bir şarkı seç</p>
+          <span id="player-artist">Müzik kütüphanen</span>
+        </div>
+      </div>
+      <div class="playback">
+        <div class="player-controls">
+          <button class="control-button" id="previous-button" type="button" aria-label="Önceki şarkı">|‹</button>
+          <button class="play-button" id="play-button" type="button" aria-label="Oynat" disabled>▶</button>
+          <button class="control-button" id="next-button" type="button" aria-label="Sonraki şarkı">›|</button>
+        </div>
+        <div class="progress-row">
+          <span id="current-time">0:00</span>
+          <input id="progress-input" type="range" min="0" max="1000" value="0" aria-label="Şarkı konumu" disabled />
+          <span id="duration-time">0:00</span>
+        </div>
+      </div>
+      <div class="volume-control">
+        <span aria-hidden="true">◖</span>
+        <input id="volume-input" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Ses seviyesi" />
+      </div>
+    </footer>
+
+    <audio id="audio-player" preload="metadata"></audio>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
